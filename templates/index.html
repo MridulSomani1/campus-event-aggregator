@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<!-- index.html — the single page of our app. It is mostly empty containers
+     that script.js fills in with live data from the Flask API. -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Campus Event Aggregator</title>
+
+    <!-- Our own stylesheet. url_for builds the correct /static/ path. -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+
+    <!-- Chart.js loaded from a CDN — used for the donut chart. -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+</head>
+<body>
+
+    <!-- ============ HEADER ============ -->
+    <header class="header">
+        <div class="header-left">
+            <h1>🎓 Campus Event Aggregator</h1>
+            <!-- Shows when the scraper last ran. Filled in by JS. -->
+            <p class="last-updated" id="lastUpdated">Last updated: loading…</p>
+        </div>
+        <div class="header-actions">
+            <!-- Dark mode toggle button -->
+            <button id="themeToggle" class="btn" title="Toggle dark mode">🌙</button>
+            <!-- Manually re-run the scraper -->
+            <button id="refreshBtn" class="btn">↻ Refresh</button>
+            <!-- Download CSV -->
+            <button id="exportBtn" class="btn btn-primary">⬇ Export CSV</button>
+        </div>
+    </header>
+
+    <!-- ============ SEARCH BAR ============ -->
+    <div class="search-wrap">
+        <input
+            type="text"
+            id="searchInput"
+            class="search-input"
+            placeholder="🔍 Search events by title or location…"
+        />
+    </div>
+
+    <!-- ============ CATEGORY FILTER TABS ============ -->
+    <nav class="tabs" id="categoryTabs">
+        <!-- data-category is read by JS to know which filter to apply. -->
+        <button class="tab active" data-category="All">All</button>
+        <button class="tab" data-category="Academic">Academic</button>
+        <button class="tab" data-category="Sports">Sports</button>
+        <button class="tab" data-category="Social">Social</button>
+        <button class="tab" data-category="Career">Career</button>
+    </nav>
+
+    <!-- ============ MAIN LAYOUT ============ -->
+    <main class="layout">
+
+        <!-- LEFT COLUMN: today's events + full feed -->
+        <section class="col-main">
+
+            <!-- Today's events highlighted at the top -->
+            <h2 class="section-title">📌 Today's Events</h2>
+            <div id="todayEvents" class="cards today-cards">
+                <!-- JS injects today's cards here -->
+            </div>
+
+            <!-- Full event feed -->
+            <h2 class="section-title">🗓 All Upcoming Events</h2>
+            <div id="eventFeed" class="cards">
+                <!-- JS injects all event cards here -->
+            </div>
+        </section>
+
+        <!-- RIGHT COLUMN: chart + calendar -->
+        <aside class="col-side">
+
+            <!-- Donut chart of event counts by category -->
+            <div class="panel">
+                <h3 class="panel-title">Events by Category</h3>
+                <canvas id="categoryChart"></canvas>
+            </div>
+
+            <!-- Calendar view -->
+            <div class="panel">
+                <div class="calendar-header">
+                    <button id="prevMonth" class="btn small">‹</button>
+                    <h3 class="panel-title" id="calendarTitle">Month</h3>
+                    <button id="nextMonth" class="btn small">›</button>
+                </div>
+                <div class="calendar-grid" id="calendarGrid">
+                    <!-- JS builds the month grid here -->
+                </div>
+            </div>
+        </aside>
+    </main>
+
+    <footer class="footer">
+        <p>Built with Python, Flask &amp; vanilla JS · Data scraped every 6 hours</p>
+    </footer>
+
+    <!-- Our JavaScript. defer = run after the HTML has loaded. -->
+    <script src="{{ url_for('static', filename='script.js') }}" defer></script>
+</body>
+</html>

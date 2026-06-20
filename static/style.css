@@ -1,0 +1,365 @@
+/* style.css
+   ---------------------------------------------------------------------------
+   All the styling for the app. We use CSS "variables" (the --name values) so
+   that switching to dark mode is as easy as swapping a handful of colors.
+   --------------------------------------------------------------------------- */
+
+/* ---- Color theme (light mode defaults) ---- */
+:root {
+    --bg: #f4f6fb;
+    --panel: #ffffff;
+    --text: #1c2333;
+    --muted: #6b7280;
+    --border: #e3e8f0;
+    --primary: #4f46e5;
+    --primary-soft: #eef2ff;
+    --shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+
+    /* Category accent colors (used on cards and the chart). */
+    --c-academic: #3b82f6;
+    --c-sports: #10b981;
+    --c-social: #f59e0b;
+    --c-career: #8b5cf6;
+    --c-other: #64748b;
+}
+
+/* ---- Dark mode: applied when <body class="dark"> is set by JS ---- */
+body.dark {
+    --bg: #0f1422;
+    --panel: #1a2032;
+    --text: #e6e9f0;
+    --muted: #9aa3b2;
+    --border: #2a3145;
+    --primary: #818cf8;
+    --primary-soft: #232a40;
+    --shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
+}
+
+/* ---- Base resets ---- */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: "Segoe UI", system-ui, -apple-system, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.5;
+    /* smooth color change when toggling dark mode */
+    transition: background 0.3s, color 0.3s;
+}
+
+/* ---- Header ---- */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    padding: 20px 28px;
+    background: var(--panel);
+    box-shadow: var(--shadow);
+}
+
+.header h1 {
+    font-size: 1.5rem;
+}
+
+.last-updated {
+    color: var(--muted);
+    font-size: 0.85rem;
+    margin-top: 4px;
+}
+
+.header-actions {
+    display: flex;
+    gap: 10px;
+}
+
+/* ---- Buttons ---- */
+.btn {
+    background: var(--panel);
+    color: var(--text);
+    border: 1px solid var(--border);
+    padding: 9px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: background 0.15s, transform 0.1s;
+}
+
+.btn:hover {
+    background: var(--primary-soft);
+}
+
+.btn:active {
+    transform: scale(0.97);
+}
+
+.btn.small {
+    padding: 4px 10px;
+}
+
+.btn-primary {
+    background: var(--primary);
+    color: #fff;
+    border-color: var(--primary);
+}
+
+.btn-primary:hover {
+    opacity: 0.9;
+    background: var(--primary);
+}
+
+/* ---- Search bar ---- */
+.search-wrap {
+    padding: 20px 28px 0;
+}
+
+.search-input {
+    width: 100%;
+    padding: 12px 16px;
+    font-size: 1rem;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    background: var(--panel);
+    color: var(--text);
+}
+
+.search-input:focus {
+    outline: 2px solid var(--primary);
+}
+
+/* ---- Category tabs ---- */
+.tabs {
+    display: flex;
+    gap: 8px;
+    padding: 16px 28px;
+    flex-wrap: wrap;
+}
+
+.tab {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    padding: 8px 18px;
+    border-radius: 20px;
+    cursor: pointer;
+    color: var(--text);
+    font-size: 0.9rem;
+    transition: all 0.15s;
+}
+
+.tab:hover {
+    background: var(--primary-soft);
+}
+
+/* The currently-selected tab */
+.tab.active {
+    background: var(--primary);
+    color: #fff;
+    border-color: var(--primary);
+}
+
+/* ---- Main two-column layout ---- */
+.layout {
+    display: grid;
+    grid-template-columns: 1fr 360px;
+    gap: 24px;
+    padding: 8px 28px 40px;
+}
+
+/* On narrow screens, stack into one column. */
+@media (max-width: 900px) {
+    .layout {
+        grid-template-columns: 1fr;
+    }
+}
+
+.section-title {
+    font-size: 1.15rem;
+    margin: 18px 0 12px;
+}
+
+/* ---- Event cards grid ---- */
+.cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 16px;
+}
+
+.card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-left: 5px solid var(--c-other); /* recolored per category by JS */
+    border-radius: 12px;
+    padding: 16px;
+    box-shadow: var(--shadow);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.card-title {
+    font-size: 1.05rem;
+    font-weight: 600;
+}
+
+.card-row {
+    font-size: 0.88rem;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+/* Top row of each card: category badge + countdown pill */
+.card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.badge {
+    font-size: 0.72rem;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 12px;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+}
+
+/* The "in 2 days" countdown pill */
+.countdown {
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 12px;
+    background: var(--primary-soft);
+    color: var(--primary);
+}
+
+.card-link {
+    margin-top: 4px;
+    font-size: 0.85rem;
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.card-link:hover {
+    text-decoration: underline;
+}
+
+/* Category badge/border colors. JS adds one of these classes to each card. */
+.cat-Academic { border-left-color: var(--c-academic); }
+.cat-Sports   { border-left-color: var(--c-sports); }
+.cat-Social   { border-left-color: var(--c-social); }
+.cat-Career   { border-left-color: var(--c-career); }
+.cat-Other    { border-left-color: var(--c-other); }
+
+.badge.cat-Academic { background: var(--c-academic); }
+.badge.cat-Sports   { background: var(--c-sports); }
+.badge.cat-Social   { background: var(--c-social); }
+.badge.cat-Career   { background: var(--c-career); }
+.badge.cat-Other    { background: var(--c-other); }
+
+/* Highlight ring around today's events */
+.today-cards .card {
+    border: 1px solid var(--primary);
+    border-left-width: 5px;
+}
+
+.empty {
+    color: var(--muted);
+    font-style: italic;
+    padding: 8px 0;
+}
+
+/* ---- Right side panels (chart + calendar) ---- */
+.panel {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 18px;
+    margin-bottom: 24px;
+    box-shadow: var(--shadow);
+}
+
+.panel-title {
+    font-size: 1rem;
+    margin-bottom: 12px;
+}
+
+/* ---- Calendar ---- */
+.calendar-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+}
+
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 4px;
+}
+
+/* Weekday name cells (Sun, Mon...) */
+.cal-dow {
+    text-align: center;
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: var(--muted);
+    padding: 4px 0;
+}
+
+/* Each day cell */
+.cal-day {
+    aspect-ratio: 1 / 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    position: relative;
+}
+
+.cal-day.empty-cell {
+    background: transparent;
+}
+
+.cal-day.has-day {
+    background: var(--bg);
+}
+
+/* Today's date in the calendar */
+.cal-day.today {
+    background: var(--primary);
+    color: #fff;
+    font-weight: 700;
+}
+
+/* The little dot under days that have events */
+.cal-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--c-sports);
+    margin-top: 3px;
+}
+
+.cal-day.today .cal-dot {
+    background: #fff;
+}
+
+/* ---- Footer ---- */
+.footer {
+    text-align: center;
+    padding: 24px;
+    color: var(--muted);
+    font-size: 0.85rem;
+}

@@ -1,0 +1,26 @@
+# render.yaml
+# ---------------------------------------------------------------------------
+# This tells Render.com how to build and run our app. When you connect your
+# GitHub repo to Render and it sees this file, it configures everything
+# automatically ("Blueprint" deploy).
+# ---------------------------------------------------------------------------
+
+services:
+  - type: web                      # a web service (responds to HTTP)
+    name: campus-event-aggregator  # the name shown in your Render dashboard
+    runtime: python                # this is a Python app
+    plan: free                     # use the free tier
+
+    # Install all Python dependencies.
+    buildCommand: "pip install -r requirements.txt"
+
+    # Run the app with gunicorn (a production-grade server).
+    # "app:app" means: in the file app.py, use the variable named `app`.
+    # --workers 1 keeps the APScheduler background job running in a single
+    # process (multiple workers would each start their own scheduler).
+    startCommand: "gunicorn app:app --workers 1 --bind 0.0.0.0:$PORT"
+
+    # Render sets $PORT automatically; gunicorn binds to it above.
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.12.4"

@@ -1,0 +1,21 @@
+# Python cache files
+__pycache__/
+*.py[cod]
+*.pyc
+
+# The SQLite database (it is regenerated automatically on startup)
+*.db
+events.db
+
+# Environment / secrets
+.env
+
+# Virtual environment folders
+venv/
+env/
+.venv/
+
+# Editor / OS junk
+.vscode/
+.idea/
+.DS_Store
