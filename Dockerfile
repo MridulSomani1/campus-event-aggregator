@@ -1,3 +1,4 @@
+# Hugging Face Spaces requires port 7860
 FROM python:3.9
 
 # Create a non-root user (Hugging Face Spaces requires uid 1000).
