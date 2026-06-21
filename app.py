@@ -202,5 +202,4 @@ def export_csv():
 # of running this block (see render.yaml).
 # ---------------------------------------------------------------------------
 if __name__ == "__main__":
-    # debug=True gives helpful error pages while you are learning.
-    app.run(host="0.0.0.0", port=5000, debug=True)
+    app.run(host="0.0.0.0", port=7860)
