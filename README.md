@@ -1,3 +1,13 @@
+---
+title: Campus Event Aggregator
+emoji: 🌍
+colorFrom: purple
+colorTo: green
+sdk: docker
+app_port: 7860
+pinned: false
+---
+
 # 🎓 Campus Event Aggregator
 
 A full-stack web app that scrapes campus events from multiple sources, automatically

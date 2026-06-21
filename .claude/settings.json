@@ -1,7 +1,11 @@
 {
   "permissions": {
     "allow": [
-      "PowerShell(Get-ChildItem -Force | Select-Object Name; Write-Output \"---python---\"; \\(Get-Command python\\).Source)"
+      "PowerShell(Get-ChildItem -Force | Select-Object Name; Write-Output \"---python---\"; \\(Get-Command python\\).Source)",
+      "Bash(git fetch *)",
+      "Bash(git ls-tree *)",
+      "Bash(git merge *)",
+      "Bash(git push *)"
     ]
   }
 }
