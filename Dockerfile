@@ -19,4 +19,6 @@ COPY --chown=user . .
 # Hugging Face Spaces expects the app on port 7860.
 EXPOSE 7860
 
-CMD ["python", "app.py"]
+# Use gunicorn (production WSGI server). One worker keeps the APScheduler
+# single-instance; multiple threads handle the frontend's concurrent requests.
+CMD ["gunicorn", "-w", "1", "--threads", "8", "-b", "0.0.0.0:7860", "--timeout", "120", "app:app"]
